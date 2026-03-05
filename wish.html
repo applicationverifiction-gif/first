@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev ❤️ Amul</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: white;
+      overflow-x: hidden;
+
+      background: linear-gradient(270deg, #ff758c, #ff7eb3, #ffd1ff, #ff9a9e, #fbc2eb);
+      background-size: 1000% 1000%;
+      animation: gradientMove 15s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.20), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 150, 0.22), transparent 42%),
+        radial-gradient(circle at 40% 85%, rgba(255, 200, 200, 0.18), transparent 45%);
+      z-index: -1;
+    }
+
+    h1 {
+      margin-top: 28px;
+      font-size: 44px;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .counter {
+      font-size: 24px;
+      margin: 10px 16px 6px;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .sub {
+      opacity: .9;
+      margin: 0 16px 18px;
+      font-size: 14px;
+    }
+
+    /* Start overlay */
+    #startOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffd1ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: pointer;
+      transition: opacity 0.6s ease;
+    }
+
+    #startOverlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #startOverlay .overlay-heart {
+      font-size: 80px;
+      animation: pulse 1.5s infinite;
+      margin-bottom: 16px;
+    }
+
+    #startOverlay p {
+      font-size: 22px;
+      font-weight: 700;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+
+    #startOverlay .overlay-sub {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: 8px;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 22px;
+      animation: float 6s linear infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px rgba(255, 105, 180, .7));
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1
+      }
+
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0
+      }
+    }
+
+    /* Love meter */
+    .loveMeter {
+      width: min(320px, 85vw);
+      height: 25px;
+      background: rgba(255, 255, 255, 0.30);
+      margin: 14px auto 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
+    }
+
+    #loveBar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff2e63, #ff9a9e, #ffd1ff);
+    }
+
+    #loveText {
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    /* Gallery */
+    .gallery {
+      width: min(320px, 85vw);
+      height: min(320px, 85vw);
+      margin: 8px auto 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.45);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Timeline */
+    .timeline {
+      max-width: 760px;
+      margin: 18px auto 18px;
+      text-align: left;
+      padding: 0 16px;
+    }
+
+    .timeline div {
+      background: rgba(255, 255, 255, 0.22);
+      padding: 14px 14px;
+      margin: 10px 0;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Letter */
+    #letter {
+      max-width: 850px;
+      margin: 16px auto 18px;
+      background: rgba(0, 0, 0, 0.30);
+      padding: 22px;
+      border-radius: 16px;
+      font-size: 18px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Buttons */
+    button {
+      padding: 14px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    }
+
+    #yes {
+      background: #ff2e63;
+      color: white
+    }
+
+    #no {
+      background: white;
+      color: #ff2e63
+    }
+
+    #ring {
+      font-size: 64px;
+      display: none;
+      margin-top: 8px;
+    }
+
+    /* Final glowing message */
+    #finalMessage {
+      display: none;
+      font-size: 48px;
+      margin: 26px 10px 10px;
+      font-weight: 900;
+      text-shadow: 0 0 22px pink, 0 0 44px red, 0 0 70px white;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.08)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    /* Fireworks */
+    .firework {
+      position: fixed;
+      font-size: 24px;
+      animation: boom 1s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes boom {
+      0% {
+        transform: scale(0);
+        opacity: 1
+      }
+
+      100% {
+        transform: scale(3) translateY(-110px);
+        opacity: 0
+      }
+    }
+
+    @media (max-width:600px) {
+      h1 {
+        font-size: 38px
+      }
+
+      #finalMessage {
+        font-size: 36px
+      }
+
+      #letter {
+        font-size: 16px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Overlay - tap to play music -->
+  <div id="startOverlay">
+    <div class="overlay-heart">💖</div>
+    <p>Tap to Open ❤️</p>
+    <p class="overlay-sub">🎵 A surprise awaits you…</p>
+  </div>
+
+  <h1>Dev ❤️ Amul</h1>
+
+  <!-- Days together counter (from 16/06/2023) -->
+  <div class="counter" id="daysTogether">💞 0 days and counting… ❤️</div>
+  <div class="sub">Together since 16/06/2023</div>
+
+  <!-- Music (place love.webm in same folder) -->
+  <audio id="bgm" loop>
+    <source src="love.webm" type="audio/webm" />
+  </audio>
+
+  <h2>Our Love Meter ∞</h2>
+  <div class="loveMeter">
+    <div id="loveBar"></div>
+  </div>
+  <div id="loveText">0% (and growing forever ∞)</div>
+
+  <div class="gallery">
+    <img id="slide" src="img1.jpg" alt="Our photo">
+  </div>
+
+  <h2>Our Beautiful Journey 💑</h2>
+  <div class="timeline">
+    <div>💖 The day we fell in love – 16/12/2022</div>
+    <div>🌹 Our first special moment – 16/06/2023</div>
+    <div>✨ The moment I realized I love you – When I started talking with you in chat</div>
+  </div>
+
+  <h2>My Love Letter 💌</h2>
+  <div id="letter"></div>
+
+  <h2>Will you forgive me and be mine forever once again, meri pyari Amul? ❤️</h2>
+  <button id="yes">Yes ❤️</button>
+  <button id="no">No 😅</button>
+
+  <div id="ring">💍</div>
+  <div id="finalMessage">Dev ❤️ Amul Forever</div>
+
+  <script>
+    // Start overlay: tap to play music and dismiss
+    const bgm = document.getElementById("bgm");
+    const overlay = document.getElementById("startOverlay");
+    overlay.addEventListener("click", () => {
+      bgm.play().catch(() => { });
+      overlay.classList.add("hidden");
+      setTimeout(() => overlay.remove(), 700);
+    });
+
+    /* Floating hearts (random) */
+    function heart() {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = ["❤️", "💖", "💗", "💘"][Math.floor(Math.random() * 4)];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = (14 + Math.random() * 22) + "px";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
+    }
+    setInterval(heart, 220);
+
+    /* Slideshow (put img1.jpg..img4.jpg in same folder) */
+    const images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % images.length;
+      document.getElementById("slide").src = images[idx];
+    }, 2500);
+
+    /* Infinite love meter */
+    let love = 0;
+    function increaseLove() {
+      love += 5;
+      document.getElementById("loveBar").style.width = (love % 100) + "%";
+      document.getElementById("loveText").innerHTML = love + "% (and growing forever ∞)";
+      setTimeout(increaseLove, 200);
+    }
+    increaseLove();
+
+    /* Days together counter from 16/06/2023 */
+    const togetherFrom = new Date("2023-06-16T00:00:00");
+    function updateDays() {
+      const now = new Date();
+      const diff = now - togetherFrom;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("daysTogether").innerHTML =
+        "💞 " + days + " days and counting… ❤️";
+    }
+    setInterval(updateDays, 1000);
+    updateDays();
+
+    /* Auto-typing love letter (FULL MESSAGE) */
+    const text = `Meri pyari Amul ❤️ !
+I know I have done so many mistakes and hurted you alot but I am extremely sorry meri jaan ki meri wajah se aap ko itna pareshan hona pada. I know sorry doesn't heal aur correct anything but meri jaan hum sachi Dil se maafi chahte hai apni galti ke liye aur hum sab sahi karna chahte hai. 
+
+I know all of sudden sab sahi nahi hoga I know kyu itna hurt jo hum kiye hai aap ko. Lekin hum sab sahi karna chahte hai chahe kuch bhi karna pade. Aapni sare galti ko hum sahi kare ge aur aap se bhot pyaar kare ge please humko maaf kar Dena meri Amul. I am really really sorry for everything wrong I have done to you.
+
+But ab hum sab sahi kar ke aao ke sath usse pyaar ke sath aana chahte hai meri Amul. Aur aap ko meri jaan, mera baccha, meri babu, meri laado, mera, meri duniya aur Mera sab kuch bol ke bunalna chahte hai toh please aa jao na wapas. Hum sath hote hai toh humara strength aur bhi strong hota hai aur wahi chahte hai hum. Aap meri sab kuch ho meri jaan. Aap se hi hum hai aap ke Bina hum kuch nahi hai. Please humko maaf kar dijiye aur aap ko apna banane dijiye na please. Bas ye bolna hai amul ki meri rahna. Kyu ki aap ke Bina kuch nahi hai aur aap se hi sab hai. Please jawab ha mai hi dena please. 🥺❤️`;
+
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        document.getElementById("letter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, 30);
+      }
+    }
+    type();
+
+    /* No button runs away */
+    const noBtn = document.getElementById("no");
+    noBtn.addEventListener("mouseover", () => {
+      noBtn.style.position = "absolute";
+      noBtn.style.left = Math.random() * 80 + "%";
+      noBtn.style.top = Math.random() * 80 + "%";
+    });
+
+    /* YES button: ring + fireworks + final message */
+    document.getElementById("yes").onclick = () => {
+      document.getElementById("ring").style.display = "block";
+      document.getElementById("finalMessage").style.display = "block";
+      fireworks();
+    };
+
+    function fireworks() {
+      for (let j = 0; j < 40; j++) {
+        const f = document.createElement("div");
+        f.className = "firework";
+        f.innerHTML = ["❤️", "💖", "✨", "💞"][Math.floor(Math.random() * 4)];
+        f.style.left = Math.random() * 100 + "vw";
+        f.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 1000);
+      }
+    }
+  </script>
+
+</body>
+
+</html>
